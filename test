@@ -1,0 +1,44 @@
+const {Builder, By, Key} = require ("selenium-webdriver");
+
+
+async function store(){
+
+let driver = await new Builder().forBrowser("firefox").build();
+
+//open the store website:
+await driver.get("http://automationpractice.com/index.php")
+
+//go to the login page:
+await driver.findElement(By.xpath("/html/body/div/div[1]/header/div[2]/div/div/nav/div[1]/a")).click();
+
+//login with a previously created account:
+await driver.findElement(By.id("email")).sendKeys("test0@email.com");
+await driver.findElement(By.id("passwd")).sendKeys("Password890-*");
+
+//open the 'women' category:
+await driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[6]/ul/li[1]/a")).click();
+
+//open the first item in a new page:
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[1]/div/div[2]/div[2]/a[2]")).click();
+
+//proceed to the checkout page from this modal window:
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/div/div/div[4]/form/div/div[3]/div/p/button")).click();
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")).click();
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/form/p/button")).click();
+
+//agree to the Terms of service by checking the box:
+await driver.findElement(By.id("uniform-cgv")).click();
+
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/div/form/p/button")).click();
+
+//accept the method of payment:
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/div/div[3]/div[1]/div/p/a")).click();
+
+await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/form/p/button")).click();
+
+
+//close the browser:
+await driver.quit();
+};
+
+store();
