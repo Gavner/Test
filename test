@@ -4,6 +4,7 @@ const {Builder, By, Key} = require ("selenium-webdriver");
 async function store(){
 
 let driver = await new Builder().forBrowser("firefox").build();
+//driver.manage().window().maximize();
 
 //open the store website:
 await driver.get("http://automationpractice.com/index.php")
@@ -13,18 +14,20 @@ await driver.findElement(By.xpath("/html/body/div/div[1]/header/div[2]/div/div/n
 
 //login with a previously created account:
 await driver.findElement(By.id("email")).sendKeys("test0@email.com");
-await driver.findElement(By.id("passwd")).sendKeys("Password890-*");
+await driver.findElement(By.id("passwd")).sendKeys("Password890-*", Key.RETURN);
 
 //open the 'women' category:
 await driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[6]/ul/li[1]/a")).click();
 
-//open the first item in a new page:
-await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[1]/div/div[2]/div[2]/a[2]")).click();
 
-//proceed to the checkout page from this modal window:
-await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/div/div/div[4]/form/div/div[3]/div/p/button")).click();
-await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]")).click();
-await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/form/p/button")).click();
+//add the first store item to the cart:
+let item = await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[1]/div/div[2]/div[2]/a[1]"));
+driver.executeScript("arguments[0].click();", item);
+
+
+//proceed to checkout:
+let item2 = await driver.findElement(By.xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]/div[1]/div[2]/div[4]/a"));
+driver.executeScript("arguments[0].click();", item2);
 
 //agree to the Terms of service by checking the box:
 await driver.findElement(By.id("uniform-cgv")).click();
@@ -37,8 +40,9 @@ await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/div/div[
 await driver.findElement(By.xpath("/html/body/div/div[2]/div/div[3]/div/form/p/button")).click();
 
 
-//close the browser:
+//close browser
 await driver.quit();
+
 };
 
 store();
